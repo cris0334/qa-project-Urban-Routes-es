@@ -1,5 +1,8 @@
 # Proyecto Urban Routes 
 
+Alumno: Cristopher Antonio Garza Bustamante
+Cohort: 22
+
 ## _Proyecto para TripleTen QA Sprint 8_
 
 En este proyecto haremos pruebas automatizadas para la aplicación de prueba "Urban Routes", específicamente un uso completo de la funcionalidad de pedir un viaje en taxi con parametros establecidos
@@ -34,10 +37,8 @@ Instrucciones para ejecutar las pruebas
 Estructura del proyecto:
 - root
   - .gitignore: archivos a ignorar en repositorio git
-  - configuration-py: variables de URL para la dirección del servidor de Urban Grocers y las funciones de la API
-  - create_kit_name_kit_test.py: archivo principal de las pruebas 
-  - data.py: archivo con las estructuras de datos para los cuerpos de los mensajes POST de la API y sus respuestas. 
+  - data.py: variables para pruebas en Urban Routes
+  - main.py: archivo principal de las pruebas  
   - README.md: este archivo
   - requirements.txt: archivo con las dependencias del proyecto
-  - sender_stand_request.py: archivo con las llamadas a la API de Urban Grocers
   

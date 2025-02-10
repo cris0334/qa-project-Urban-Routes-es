@@ -33,6 +33,12 @@ class UrbanRoutesPage:
     add_phone_send_button = (By.XPATH, '//button[text()="Siguiente"]')
     order_a_taxi_button = (By.CSS_SELECTOR, "button.smart-button")  # Edit1: Se cambió por CSS_Selector
 
+    modal_title = (By.XPATH, '//div[@class="order-header-title"]')
+    modal_time_to_assign = (By.XPATH, '//div[@class="order-header-time"]')
+    modal_driver_detail_shown = (By.XPATH, '//div[@class="order-details shown"]')
+    display_taxi_info_button = (By.XPATH, '//button[@class="order-button"]//img[@alt="burger"]')
+    modal_driver_order_button = (By.XPATH, "//div[@class='order-button']")
+
     def __init__(self, driver):
         self.driver = driver
 
@@ -40,8 +46,16 @@ class UrbanRoutesPage:
         WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located(self.from_field))
 
     def wait_for_payment_page_load(self):
-        WebDriverWait(self.driver, 5).until(
-            expected_conditions.visibility_of_element_located(self.card_form_open_button))
+        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located(self.card_form_open_button))
+
+    def wait_for_modal_time(self):
+        WebDriverWait(self.driver, 60).until(expected_conditions.text_to_be_present_in_element(self.modal_time_to_assign, "01"))
+        time_to_assign = self.get_modal_time_to_assign()
+        minutes_str, seconds_str = time_to_assign.split(":")
+
+        seconds = int(minutes_str) * 60 + int(seconds_str) + 1
+
+        WebDriverWait(self.driver, seconds).until(expected_conditions.visibility_of_element_located(self.modal_driver_order_button))
 
     def wait_form_card_page_load(self):  # Edit 1: corrección de nombre
         WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located(self.card_number))
@@ -102,7 +116,22 @@ class UrbanRoutesPage:
         blanket_napkins = blanket_napkins_and_acoustic_curtain[0].get_property('checked')
         acoustic_curtain = blanket_napkins_and_acoustic_curtain[1].get_property('checked')
 
-        return (blanket_napkins, acoustic_curtain)
+        return blanket_napkins, acoustic_curtain
+
+    def get_modal_title(self):
+        modal_title_element = self.driver.find_element(*self.modal_title)
+
+        return modal_title_element.text
+
+    def get_modal_time_to_assign(self):
+        modal_time_element = self.driver.find_element(*self.modal_time_to_assign)
+
+        return modal_time_element.text
+
+    def get_modal_driver_detail(self):
+        modal_driver_detail = self.driver.find_element(*self.modal_driver_detail_shown)
+
+        return modal_driver_detail.get_property('innerText')
 
     def set_route(self, address_from, address_to):
         self.set_from(address_from)
@@ -193,3 +222,6 @@ class UrbanRoutesPage:
 
     def order_a_taxi_button_click(self):
         self.driver.find_element(*self.order_a_taxi_button).click()
+
+    def display_driver_info_click(self):
+        self.driver.find_element(*self.display_taxi_info_button).click()

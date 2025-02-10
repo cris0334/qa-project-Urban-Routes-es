@@ -92,8 +92,23 @@ class TestUrbanRoutes:
 
     def test_car_search_model_appears(self):
         self.routes_page.order_a_taxi_button_click() # ordering the taxi
+        modal_title = self.routes_page.get_modal_title()
 
-        # No puedo hacer el assert porque no se mantiene el
+        assert modal_title == 'Buscar automóvil'
+
+    def test_driver_info_appears(self):
+        self.routes_page.wait_for_modal_time()
+        self.routes_page.display_driver_info_click()
+
+        assert self.routes_page.get_modal_driver_detail() == """East 2nd Street, 601
+Lugar de recogida
+1300 1st St
+Dirección de destino
+Tarjeta
+Método de pago
+Más información sobre el viaje
+Precio - $150"""
+
 
     @classmethod
     def teardown_class(cls):

@@ -38,6 +38,8 @@ Estructura del proyecto:
 - root
   - .gitignore: archivos a ignorar en repositorio git
   - data.py: variables para pruebas en Urban Routes
+  - helpers.py: métodos proporcionados por TripleTen para obtener el código generado para confirmar el teléfono
+  - UrbanROutesPage.py: métodos de la página de Urban Routes
   - main.py: archivo principal de las pruebas  
   - README.md: este archivo
   - requirements.txt: archivo con las dependencias del proyecto
